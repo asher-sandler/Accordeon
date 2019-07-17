@@ -1,0 +1,9 @@
+
+
+<div style="background: url(&quot;/gucfo/Kaluga/Banners/OKaluga.jpg&quot;); min-height: 204px;background-position:center;background-repeat:no-repeat; ">
+   <h1 style="background: none; text-align: left; color: #fff; margin:50px;">Отделение по Калужской области 
+      <br/>Центрального банка
+      <br/>Российской Федерации  
+      <br/>по Центральному федеральному округу</h1>
+</div>
+

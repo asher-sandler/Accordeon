@@ -1,0 +1,7 @@
+﻿A1:Страницы отделов:spravka
+B1:Отдел по работе с персоналом
+C1:https://cbrportal.cbr.ru/gucfo/Kaluga/pages/kadry.aspx
+
+B2:Экономический отдел
+C2:https://cbrportal.cbr.ru/gucfo/Kaluga/pages/econ.aspx
+

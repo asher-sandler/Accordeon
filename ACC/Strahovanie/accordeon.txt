@@ -1,0 +1,8 @@
+﻿A1:Документы:3-13
+B1:Памятка мед страховка
+C1:https://cbrportal.cbr.ru/gucfo/Kaluga/strahovanie/Памятка%20мед%20страховка.doc?Web=1
+B2:Заявления о страховой выплате
+C2:https://cbrportal.cbr.ru/gucfo/Kaluga/strahovanie/Заявления%20о%20страховой%20выплате.doc?Web=1
+B3:Как получить мед страховку
+C3:https://cbrportal.cbr.ru/gucfo/Kaluga/strahovanie/Как%20получить%20мед%20страховку.doc?Web=1
+

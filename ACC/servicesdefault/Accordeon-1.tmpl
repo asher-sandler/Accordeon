@@ -1,0 +1,133 @@
+@ this is a comments
+@ tabbedform.TMPL for generatin powershell script
+@ that will be generate js for screen form
+@ usage  -   .\PS-gen.ps1 -TemplateName js1
+@ generate ps script on this template
+@ variables
+@ %%params%%
+@ %%  - add leadinig and trailing plus
+@ % - nothing to add
+@ %%FormName%%
+<<function create-Accordeon-From-Template($oacc)>>
+<<{>>
+	<<$crlf = [char][int]13+[char][int]10>>
+	
+	
+<link rel="stylesheet" href="/_layouts/15/WSSC.PRT.PNT6.Highlights/css/accordeon.css" type="text/css" />
+
+<script src='/_layouts/15/WSSC.PRT.PNT6.Core/Js/jquery.ui.widget.js?version=2307180115' type='text/javascript'></script>
+<script src='/_layouts/15/WSSC.PRT.PNT6.Core/Js/jquery.fileupload.js?version=2307180115' type='text/javascript'></script>
+<script src='/_layouts/15/WSSC.PRT.PNT6.Core/Js/jquery.iframe-transport.js?version=2307180115' type='text/javascript'></script>
+
+<div class="global-wrap" >
+
+    
+    <<foreach($acc in $oacc){>>
+    <div class="accordeon-wrap">
+        <div class="accordeon-header with-icon" >
+            
+            <img class="active-icon" src="/Accordeon_Images/g_c02b03ee_8c54_4783_b82f_4c3dc6b1b97d260on194821999.png" />
+            <img class="icon" src="/Accordeon_Images/g_c02b03ee_8c54_4783_b82f_4c3dc6b1b97d260off884987208.png" />
+            
+            <div class="show-name-value"><<%%$acc.Name%%>></div>
+            <div class="close-icon"></div>
+            
+        </div>
+        <div class="inner">
+            <div class="show-block">
+                <div class="show-priority-value">10</div>
+                <div class="show-field-container clearfix">
+                    <div class="content clearfix">
+					<<foreach($cont in $acc.Contents){>>
+					<p>
+					<a class="wss-fileeditable" href="<<%%$cont.URI%%>>">
+					<img class="wss-fileeditable__icon" src="/_layouts/15/WSSC.PRT.PNT6.Highlights/img/document-ico.png" />
+					<<%%$cont.Name%%>>
+					</a>
+					</p>
+					<<}>>
+					</div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+    
+	<<}>>
+
+    
+</div>
+
+
+<div id="modal-decline" class="modal-decline">
+    <div class="modal-content">
+        <div class="text">Удалить данный элемент?</div>
+        <div class="accept-button" data-id="" onclick="deleteInfo(this);">Да</div>
+        <div class="cancel-button" onclick="closeModal();">Отмена</div>
+    </div>
+</div>
+
+<script id="accordeon-template" type="text/x-handlebars-template">
+    <div class="accordeon-wrap">
+        <div class="accordeon-header" data-id="{{accordId}}">
+            <div class="show-name-value"></div>
+            <div class="close-icon"></div>
+            <div class="delete-button" title="Удалить элемент" onclick="showDeleteModal(this);"></div>
+            <div class="update-button" title="Редактировать элемент" onclick="updateInfo(this);"></div>
+        </div>
+        <div class="inner">
+            <div class="show-block">
+
+                <div class="show-priority-value"></div>
+                <div class="show-field-container">
+                    <div class="content clearfix"></div>
+                </div>
+            </div>
+
+            <div class="updating-block">
+                <div class="updating-name-block">
+                    <div class="updating-name-title">Название</div>
+                    <input class="updating-name-input" type="text" />
+                </div>
+                <div class="updating-priority-block">
+                    <div class="updating-priority-title">Приоритет</div>
+                    <input class="updating-priority-input" type="text" />
+                </div>
+                <div class="updating-images">
+                    <div class="image-off">
+                        <input class="upload" id="image-off-uploader{{accordId}}" data-id="{{accordId}}" data-type="off" type="file" name="files[]" data-url="/_layouts/15/wssc.prt.pnt6.core/Handlers/ajax.ashx" style="display: none;">
+                        <label for="image-off-uploader{{accordId}}" class="upload-label">Загрузить иконку</label>
+                        <div class="image-with-delete-container">
+                            <img id="image-off-uploader-img{{accordId}}" class="upload-image" src="" />
+                            <span id="image-off-delete{{accordId}}" class="image-delete" data-id="{{accordId}}" data-type="off" title="Удалить" onclick="deleteImage(this);"></span>
+                        </div>
+                    </div>
+                    <div class="image-on">
+                        <input class="upload" id="image-on-uploader{{accordId}}" data-id="{{accordId}}" data-type="on" type="file" name="files[]" data-url="/_layouts/15/wssc.prt.pnt6.core/Handlers/ajax.ashx" style="display: none;">
+                        <label for="image-on-uploader{{accordId}}" class="upload-label">Загрузить активную иконку</label>
+                        <div class="image-with-delete-container">
+                            <img id="image-on-uploader-img{{accordId}}" class="upload-image-on" src="" />
+                            <span id="image-on-delete{{accordId}}" class="image-delete" data-id="{{accordId}}" data-type="on" title="Удалить" onclick="deleteImage(this);"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="updating-container-title">Контент</div>
+                <div class="updating-field-container">
+                    <textarea class="container-add" id="container{{accordId}}"></textarea>
+                </div>
+                <div class="cancel-button" onclick="cancel(this);">Отменить</div>
+                <div class="send-button" onclick="sendForm(this);">Сохранить</div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript" src="/_layouts/15/WSSC.PRT.PNT6.Core/Plugins/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="/_layouts/15/WSSC.PRT.PNT6.Highlights/js/accordeon.js"></script>
+
+
+	<<return $script>>
+
+<<}>>

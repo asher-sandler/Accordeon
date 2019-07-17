@@ -1,0 +1,186 @@
+﻿@ this is a comments
+@ tabbedform.TMPL for generatin powershell script
+@ that will be generate js for screen form
+@ usage  -   .\PS-gen.ps1 -TemplateName js1
+@ generate ps script on this template
+@ variables
+@ %%params%%
+@ %%  - add leadinig and trailing plus
+@ % - nothing to add
+@ %%FormName%%
+<<function create-tabbedHTML-From-Template($Action,$formo)>>
+<<{>>
+	<<$crlf = [char][int]13+[char][int]10>>
+	<<$hiddenFormID=get-hidden-formID($formo)>>
+	
+	<<$formAction = "">>
+	<<switch ($Action.ToUpper())>>
+	<<{>>
+	<<	'ADD'  { $formAction= ":Добавление"}>>
+	<<	'EDIT' { $formAction= ":Редактирование"}>>
+	<<	'SHOW' { $formAction= ":Просмотр"}>>
+	<<}>>
+    <<$script="">>
+@
+
+<h1 class="text-center text-capitalize"><<%%$formo.Description%%>><<%%$formAction%%>></h1>
+
+<div class="col-m-1 ">
+    <ul class="nav nav-tabs nav-justified " id="myTab" role="tablist" >
+	       
+		   
+		   <<$i=1>>
+		   <<foreach($tab in $formo.tabs){>>	
+		   
+		   
+			<li class="nav-item nav-link tabbed-<<%%$i.tostring()%%>>" >
+				<a href="#tab-id-<<%%$i.tostring()%%>>" data-toggle="tab"><<%%$tab.Name%%>></a>
+			</li>
+			
+			<<$i++>>
+			<<}>>
+		
+	</ul>
+
+   <form class="needs-validation " novalidate action="/<?=Config::get("site_root")?><<%%$formo.Name%%>>" method="post">
+		<input type="hidden"  id="<<%%$hiddenFormID%%>>" name="<<%%$hiddenFormID%%>>" value="-1"/>
+
+		<div class="tab-content ">
+
+           
+		   <<$i=$formo.tabs.count>>
+		   <<while($i -ge 1){>>	
+			   
+		   
+		   <div class="tab-pane form-yaffe tab-form-<<%%$i.tostring()%%>>" id="tab-id-<<%%$i.tostring()%%>>" >
+
+				
+				
+                <H1 class="text-center text-info"><<%%$formo.tabs[$i-1].Name%%>></H1>
+				
+				<<$formRow=1>>
+				<<$fieldCount = 1>>
+                <div class="form-row ">
+                    
+				<<foreach($field in $formo.tabs[$i-1].Fields){>>
+					<<if(($formRow -gt 2) -and ($fieldCount -lt $formo.tabs.Fields.Count)){>>
+				</div>
+				<div class="form-row ">	
+					<<$formRow=1>>
+					<<}>>
+					<div class="col-md-6 mb-3">
+						  <<$fieldid =$field.Name+"-"+$formo.FormName>> 	
+						  <label for="<<%%$fieldid%%>>">
+									<<%%$field.Label%%>>
+						  </label>
+						  <<$txtReq = "">>
+						  
+						  <<if ($field.Name.ToUpper() -eq "PHOTO"){>>
+								<<$txttype = "file">>
+						  <<}else{>>
+							    <<$txttype = "text">>
+						  <<}>>
+						  
+						  
+						  <<$classtype = 'class="form-control" '>>
+						  <<$value     = "">>
+						  <<$value     = 'value="<?php echo($data['+"'"+$formo.Name+"'][0]["+'"'+$field.Name+'"])'+'?>"'>>
+						  <<$isRequired = $field.isReq>>
+						  <<if ($action.ToUpper() -eq "ADD")>>
+						  <<{>>
+							
+							<<$value     = "">>
+							<<if ($field.isReq){>>
+								<<$txtReq = " required">>
+							<<}>>
+							
+						  <<}>>
+						  <<elseif ($action.ToUpper() -eq "SHOW")>>
+						  <<{>>
+							<<$isRequired = $false>>
+							<<$classtype = 'class="form-control" readonly '>>
+							
+						  <<}>>
+						  <<elseif ($action.ToUpper() -eq "EDIT")>>
+						  <<{>>
+							<<$classtype = 'class="form-control" '>>
+							<<if ($field.isReq){>>
+								<<$txtReq = " required">>
+							<<}>>
+						  <<}>>
+						  <<else>>
+						  <<{>>
+						  
+						  <<}>>
+						  
+						  <input type="<<%%$txttype%%>>" <<%%$classtype%%>> id="<<%%$fieldid%%>>" name="<<%%$fieldid%%>>" placeholder="<<%%$field.Label%%>>" <<%%$txtReq%%>> <<%%$value%%>> >
+						  <<if ($isRequired ){>>
+			              <div class="invalid-feedback">
+                               Заполните поле: "<<%%$field.Label%%>>".
+                          </div>
+						  <div class="valid-feedback">
+                               Ok
+                          </div>
+								
+						  <<}>>						  	
+					</div>
+					<<$formRow++>>
+					<<$fieldCount++>>
+				<<}>>
+				</div>	
+
+
+
+            </div>
+			
+			<<$i-->>
+			<<}>>	
+
+			
+			<<if ($action.ToUpper() -ne "SHOW"){>>
+            <button class="btn btn-primary" type="submit">Submit form</button>
+			<<}>>
+			
+			
+		</div>
+
+    </form>
+</div>
+
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+    $(function () {
+        $('.tab-pane input, .tab-pane textarea').on('invalid',
+            function () {
+                var $closest = $(this).closest('.tab-pane');
+                //var $closest=$(this).last('.tab-pane');
+
+                var id = $closest.attr('id');
+
+                $('.nav a[href="#' + id + '"]').tab('show');
+            });
+    });
+</script>
+	<<return $script>>
+
+<<}>>
+
+

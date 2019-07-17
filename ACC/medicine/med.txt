@@ -1,0 +1,14 @@
+﻿A1:Документы:health
+B1:Порядок получения полиса ДМС родственникам
+C1:https://cbrportal.cbr.ru/gucfo/Kaluga/medicine/Порядок%20получения%20полиса%20ДМС%20родственникам.docx?Web=1
+B2:Программа ДМС СТАНДАРТ
+C2:https://cbrportal.cbr.ru/gucfo/Kaluga/medicine/Программа%20ДМС%20СТАНДАРТ.doc?Web=1
+B3:Программа ДМС ПЕНСИОННАЯ
+C3:https://cbrportal.cbr.ru/gucfo/Kaluga/medicine/Программа%20ДМС%20ПЕНСИОННАЯ.doc?Web=1
+B4:Порядок получения полиса ДМС детям
+C4:https://cbrportal.cbr.ru/gucfo/Kaluga/medicine/Порядок%20получения%20полиса%20ДМС%20детям.docx?Web=1
+B5:Порядок получения полиса ДМС работника, пенсионера
+C5:https://cbrportal.cbr.ru/gucfo/Kaluga/medicine/Порядок%20получения%20полиса%20ДМС%20работника,%20пенсионера.doc?Web=1
+B6:Перечень медицинских учреждений
+C6:https://cbrportal.cbr.ru/gucfo/Kaluga/medicine/Перечень%20медицинских%20учреждений.pdf?Web=1
+
